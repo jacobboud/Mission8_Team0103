@@ -1,8 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Quadrants";
 }
 
-@model List<Task>
+@model List<Mission8_Team0103.Models.Task>
 
 <div class="container text-center mt-4">
     <h3>Stephen Covey's Time Management Matrix</h3>
@@ -27,10 +27,9 @@
                         <li>
                             @m.TaskName
                             <input type="checkbox" name="Completed_@m.TaskId" @(m.IsCompleted ? "checked" : "") />
-                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
-                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
+                            <a class="btn btn-info" asp-controller="Task" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Task" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
                         </li>
-                        
                     }
                 }
             </ul>
@@ -40,13 +39,13 @@
             <ul>
                 @foreach (var m in Model)
                 {
-                    if (m.Quadrant == 2 !m.IsCompleted)
+                    if (m.Quadrant == 2 && !m.IsCompleted)
                     {
                         <li>
                             @m.TaskName
                             <input type="checkbox" name="Completed_@m.TaskId" @(m.IsCompleted ? "checked" : "") />
-                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
-                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
+                            <a class="btn btn-info" asp-controller="Task" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Task" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
                         </li>
                     }
                 }
@@ -67,8 +66,8 @@
                         <li>
                             @m.TaskName
                             <input type="checkbox" name="Completed_@m.TaskId" @(m.IsCompleted ? "checked" : "") />
-                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
-                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
+                            <a class="btn btn-info" asp-controller="Task" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Task" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
                         </li>
                     }
                 }
@@ -84,8 +83,8 @@
                         <li>
                             @m.TaskName
                             <input type="checkbox" name="Completed_@m.TaskId" @(m.IsCompleted ? "checked" : "") />
-                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
-                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
+                            <a class="btn btn-info" asp-controller="Task" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Task" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
                         </li>
                     }
                 }
