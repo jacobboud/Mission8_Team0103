@@ -5,6 +5,7 @@
 
 @model List<TaskModel>
 
+
 <div class="container text-center mt-4">
     <h3>Stephen Covey's Time Management Matrix</h3>
 
@@ -27,9 +28,14 @@
                     {
                         <li>
                             @m.TaskName
-                            <input type="checkbox" name="Completed_@m.TaskId" @(m.Completed ? "checked" : "") />
+                            <br />
                             <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
                             <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
+                            <form method="post" asp-controller="Home" asp-action="UpdateCompletion">
+                                <input type="hidden" name="TaskId" value="@m.TaskId" />
+                                <label>Completed:</label>
+                                <input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(m.Completed ? "checked" : "") />
+                            </form>
                         </li>
 
                     }
@@ -45,10 +51,15 @@
                     {
                         <li>
                             @m.TaskName
-                            <input type="checkbox" name="Completed_@m.TaskId" @(m.Completed ? "checked" : "") />
+                            <br />                            
                             <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
                             <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
-                        </li>
+							<form method="post" asp-controller="Home" asp-action="UpdateCompletion">
+								<input type="hidden" name="TaskId" value="@m.TaskId" />
+                                <label>Completed:</label>
+								<input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(m.Completed ? "checked" : "") />
+							</form>
+						</li>
                     }
                 }
             </ul>
@@ -67,10 +78,15 @@
                     {
                         <li>
                             @m.TaskName
-                            <input type="checkbox" name="Completed_@m.TaskId" @(m.Completed ? "checked" : "") />
+                            <br />                          
                             <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
                             <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
-                        </li>
+							<form method="post" asp-controller="Home" asp-action="UpdateCompletion">
+								<input type="hidden" name="TaskId" value="@m.TaskId" />
+                                <label>Completed:</label>
+								<input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(m.Completed ? "checked" : "") />
+							</form>
+						</li>
                     }
                 }
             </ul>
@@ -84,10 +100,17 @@
                     {
                         <li>
                             @m.TaskName
-                            <input type="checkbox" name="Completed_@m.TaskId" @(m.Completed ? "checked" : "") />
+                            <br />                      
                             <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
                             <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
-                        </li>
+							<form method="post" asp-controller="Home" asp-action="UpdateCompletion">
+								<input type="hidden" name="TaskId" value="@m.TaskId" />
+                                <label>Completed:</label>
+								<input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(m.Completed ? "checked" : "") />
+							    <br />
+                            </form>
+						</li>
+                        
                     }
                 }
             </ul>
