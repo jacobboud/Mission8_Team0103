@@ -15,7 +15,7 @@ namespace Mission8_Team0103.Controllers
             _repo = temp;
         }
 
-        public IActionResult Quadrants()
+        public IActionResult Index()
         {
             var tasks = _repo.Tasks; // Uses repository to get tasks
 
