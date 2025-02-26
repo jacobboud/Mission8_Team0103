@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mission8_Team0103.Models;
-
+ 
 namespace Mission8_Team0103.Controllers
 {
     public class HomeController : Controller
