@@ -1,0 +1,24 @@
+﻿// ITaskRepository.cs (Mission8_Team0103/Models/ITaskRepository.cs) 
+using System.Collections.Generic;
+using Mission8_Team0103.Models; // This namespace is correct
+
+namespace Mission8_Team0103.Models // Change the namespace to Models
+{
+    public interface ITaskRepository
+    {
+        IEnumerable<Task> Tasks { get; }
+        IEnumerable<Category> Categories { get; }
+
+        Task GetTaskById(int taskId);
+        void AddTask(Task task);
+        void UpdateTask(Task task);
+        void DeleteTask(Task task);
+
+        Category GetCategoryById(int categoryId);
+        void AddCategory(Category category);
+        void UpdateCategory(Category category);
+        void DeleteCategory(Category category);
+
+        void SaveChanges();
+    }
+}
