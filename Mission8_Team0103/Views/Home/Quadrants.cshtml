@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model List<Task>
+
+<div class="container text-center mt-4">
+    <h3>Stephen Covey's Time Management Matrix</h3>
+
+    <!-- Header row -->
+    <div class="row fw-bold mt-3">
+        <div class="col-2"></div> <!-- Empty space for alignment -->
+        <div class="col bg-light border py-2">Urgent</div>
+        <div class="col bg-light border py-2">Not Urgent</div>
+    </div>
+
+    <!-- Quadrants Row 1 -->
+    <div class="row">
+        <div class="col-2 bg-light border fw-bold py-4">Important</div>
+        <div class="col border p-3">
+            <h4>Quadrant 1</h4>
+            <ul>
+                @foreach (var m in Model)
+                {
+                    if (m.Quadrant == 1 && !m.IsCompleted)
+                    {
+                        <li>
+                            @m.TaskName
+                            <input type="checkbox" name="Completed_@m.TaskId" @(m.IsCompleted ? "checked" : "") />
+                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
+                        </li>
+                        
+                    }
+                }
+            </ul>
+        </div>
+        <div class="col border p-3">
+            <h4>Quadrant 2</h4>
+            <ul>
+                @foreach (var m in Model)
+                {
+                    if (m.Quadrant == 2 !m.IsCompleted)
+                    {
+                        <li>
+                            @m.TaskName
+                            <input type="checkbox" name="Completed_@m.TaskId" @(m.IsCompleted ? "checked" : "") />
+                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+
+    <!-- Quadrants Row 2 -->
+    <div class="row">
+        <div class="col-2 bg-light border fw-bold py-4">Not Important</div>
+        <div class="col border p-3">
+            <h4>Quadrant 3</h4>
+            <ul>
+                @foreach (var m in Model)
+                {
+                    if (m.Quadrant == 3 && !m.IsCompleted)
+                    {
+                        <li>
+                            @m.TaskName
+                            <input type="checkbox" name="Completed_@m.TaskId" @(m.IsCompleted ? "checked" : "") />
+                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="col border p-3">
+            <h4>Quadrant 4</h4>
+            <ul>
+                @foreach (var m in Model)
+                {
+                    if (m.Quadrant == 4 && !m.IsCompleted)
+                    {
+                        <li>
+                            @m.TaskName
+                            <input type="checkbox" name="Completed_@m.TaskId" @(m.IsCompleted ? "checked" : "") />
+                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>

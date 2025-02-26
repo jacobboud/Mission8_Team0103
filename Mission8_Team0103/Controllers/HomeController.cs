@@ -21,6 +21,23 @@ namespace Mission8_Team0103.Controllers
             return View(tasks);
         }
 
+        [HttpPost]
+        public IActionResult UpdateTasks(List<Task> updatedTasks)
+        {
+            foreach (var task in updatedTasks)
+            {
+                var existingTask = _repo.Tasks.FirstOrDefault(x => x.TaskId == task.TaskId);
+
+                if (existingTask != null)
+                {
+                    existingTask.IsCompleted = task.IsCompleted;
+                    _repo.UpdateTask(existingTask);
+                }
+            }
+
+            return RedirectToAction("Quadrants");
+        }
+
         [HttpGet]
         public IActionResult Tasks()
         {
@@ -35,7 +52,7 @@ namespace Mission8_Team0103.Controllers
             if (ModelState.IsValid)
             {
                 _repo.AddTask(response);  // Uses repository to add task
-                return View("Confirmation", response);
+                return View("Quadrants", response);
             }
             else
             {
