@@ -14,6 +14,11 @@ namespace Mission8_Team0103.Controllers
         {
             _repo = temp;
         }
+        
+        public IActionResult Index()
+        {
+            return View(); 
+        }
 
         public IActionResult Quadrants()
         {
