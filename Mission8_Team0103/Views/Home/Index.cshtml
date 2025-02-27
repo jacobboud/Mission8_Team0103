@@ -2,9 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-
-@model List<TaskModel>
-
+@model List<Mission8_Team0103.Models.Task>
 
 <div class="container text-center mt-4">
     <h3>Stephen Covey's Time Management Matrix</h3>
@@ -19,48 +17,45 @@
     <!-- Quadrants Row 1 -->
     <div class="row">
         <div class="col-2 bg-light border fw-bold py-4">Important</div>
+        
+        <!-- Quadrant 1 -->
         <div class="col border p-3">
             <h4>Quadrant 1</h4>
             <ul>
-                @foreach (var m in Model)
+                @foreach (var task in Model.Where(t => t.Quadrant == 1 && !t.Completed))
                 {
-                    if (m.Quadrant == "1" && !m.Completed)
-                    {
-                        <li>
-                            @m.TaskName
-                            <br />
-                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
-                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
-                            <form method="post" asp-controller="Home" asp-action="UpdateCompletion">
-                                <input type="hidden" name="TaskId" value="@m.TaskId" />
-                                <label>Completed:</label>
-                                <input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(m.Completed ? "checked" : "") />
-                            </form>
-                        </li>
-
-                    }
+                    <li>
+                        @task.TaskName - Due: @task.DueDate?.ToShortDateString()
+                        <br />
+                        <a class="btn btn-info btn-sm" asp-controller="Home" asp-action="Edit" asp-route-id="@task.TaskId">Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId">Delete</a>
+                        <form method="post" asp-controller="Home" asp-action="UpdateCompletion">
+                            <input type="hidden" name="TaskId" value="@task.TaskId" />
+                            <label>Completed:</label>
+                            <input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(task.Completed ? "checked" : "") />
+                        </form>
+                    </li>
                 }
             </ul>
         </div>
+
+        <!-- Quadrant 2 -->
         <div class="col border p-3">
             <h4>Quadrant 2</h4>
             <ul>
-                @foreach (var m in Model)
+                @foreach (var task in Model.Where(t => t.Quadrant == 2 && !t.Completed))
                 {
-                    if (m.Quadrant == "2" && !m.Completed)
-                    {
-                        <li>
-                            @m.TaskName
-                            <br />                            
-                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
-                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
-							<form method="post" asp-controller="Home" asp-action="UpdateCompletion">
-								<input type="hidden" name="TaskId" value="@m.TaskId" />
-                                <label>Completed:</label>
-								<input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(m.Completed ? "checked" : "") />
-							</form>
-						</li>
-                    }
+                    <li>
+                        @task.TaskName - Due: @task.DueDate?.ToShortDateString()
+                        <br />
+                        <a class="btn btn-info btn-sm" asp-controller="Home" asp-action="Edit" asp-route-id="@task.TaskId">Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId">Delete</a>
+                        <form method="post" asp-controller="Home" asp-action="UpdateCompletion">
+                            <input type="hidden" name="TaskId" value="@task.TaskId" />
+                            <label>Completed:</label>
+                            <input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(task.Completed ? "checked" : "") />
+                        </form>
+                    </li>
                 }
             </ul>
         </div>
@@ -69,52 +64,47 @@
     <!-- Quadrants Row 2 -->
     <div class="row">
         <div class="col-2 bg-light border fw-bold py-4">Not Important</div>
+        
+        <!-- Quadrant 3 -->
         <div class="col border p-3">
             <h4>Quadrant 3</h4>
             <ul>
-                @foreach (var m in Model)
+                @foreach (var task in Model.Where(t => t.Quadrant == 3 && !t.Completed))  @* FIXED Quadrant filtering *@
                 {
-                    if (m.Quadrant == "3" && !m.Completed)
-                    {
-                        <li>
-                            @m.TaskName
-                            <br />                          
-                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
-                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
-							<form method="post" asp-controller="Home" asp-action="UpdateCompletion">
-								<input type="hidden" name="TaskId" value="@m.TaskId" />
-                                <label>Completed:</label>
-								<input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(m.Completed ? "checked" : "") />
-							</form>
-						</li>
-                    }
+                    <li>
+                        @task.TaskName - Due: @task.DueDate?.ToShortDateString()
+                        <br />
+                        <a class="btn btn-info btn-sm" asp-controller="Home" asp-action="Edit" asp-route-id="@task.TaskId">Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId">Delete</a>
+                        <form method="post" asp-controller="Home" asp-action="UpdateCompletion">
+                            <input type="hidden" name="TaskId" value="@task.TaskId" />
+                            <label>Completed:</label>
+                            <input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(task.Completed ? "checked" : "") />
+                        </form>
+                    </li>
                 }
             </ul>
         </div>
+
+        <!-- Quadrant 4 -->
         <div class="col border p-3">
             <h4>Quadrant 4</h4>
             <ul>
-                @foreach (var m in Model)
+                @foreach (var task in Model.Where(t => t.Quadrant == 4 && !t.Completed))
                 {
-                    if (m.Quadrant == "4" && !m.Completed)
-                    {
-                        <li>
-                            @m.TaskName
-                            <br />                      
-                            <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@m.TaskId">Edit</a>
-                            <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@m.TaskId">Delete</a>
-							<form method="post" asp-controller="Home" asp-action="UpdateCompletion">
-								<input type="hidden" name="TaskId" value="@m.TaskId" />
-                                <label>Completed:</label>
-								<input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(m.Completed ? "checked" : "") />
-							    <br />
-                            </form>
-						</li>
-                        
-                    }
+                    <li>
+                        @task.TaskName - Due: @task.DueDate?.ToShortDateString()
+                        <br />
+                        <a class="btn btn-info btn-sm" asp-controller="Home" asp-action="Edit" asp-route-id="@task.TaskId">Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-controller="Home" asp-action="Delete" asp-route-id="@task.TaskId">Delete</a>
+                        <form method="post" asp-controller="Home" asp-action="UpdateCompletion">
+                            <input type="hidden" name="TaskId" value="@task.TaskId" />
+                            <label>Completed:</label>
+                            <input type="checkbox" name="Completed" value="true" onchange="this.form.submit()" @(task.Completed ? "checked" : "") />
+                        </form>
+                    </li>
                 }
             </ul>
         </div>
     </div>
 </div>
-

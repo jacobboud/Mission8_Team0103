@@ -15,28 +15,45 @@ namespace Mission8_Team0103.Controllers
             _repo = temp;
         }
 
+        // Display Quadrants with Tasks (Only Uncompleted)
         public IActionResult Index()
         {
-            var tasks = _repo.Tasks; // Uses repository to get tasks
-
+            var tasks = _repo.Tasks.Where(t => !t.Completed).ToList();
             return View(tasks);
         }
 
+        // GET: Display Add Task Form
         [HttpGet]
         public IActionResult Tasks()
         {
             ViewBag.Categories = _repo.Categories;
-
-            return View(new Task());
+            return View(new Task
+            {
+                TaskName = string.Empty,
+                Quadrant = 1,
+                CategoryId = 1
+            });
         }
 
+        // POST: Add New Task to Database
         [HttpPost]
         public IActionResult Tasks(Task response)
         {
             if (ModelState.IsValid)
             {
-                _repo.AddTask(response);  // Uses repository to add task
-                return View("Confirmation", response);
+                if (response.TaskId == 0)
+                {
+                    // Add new task
+                    _repo.AddTask(response);
+                }
+                else
+                {
+                    // Redirect to Edit action if editing an existing task
+                    return RedirectToAction("Edit", new { id = response.TaskId });
+                }
+
+                _repo.SaveChanges(); // Save changes
+                return RedirectToAction("Index");
             }
             else
             {
@@ -45,67 +62,82 @@ namespace Mission8_Team0103.Controllers
             }
         }
 
+        // POST: Mark Task as Completed
         [HttpPost]
         public IActionResult UpdateCompletion(int TaskId, bool Completed)
         {
-            var task = _repo.Tasks.FirstOrDefault(t => t.TaskId == TaskId);
-
+            var task = _repo.GetTaskById(TaskId);
             if (task != null)
             {
-                task.Completed = Completed; //update completion status
-                _repo.UpdateTask(task); // save changes in the databse
+                task.Completed = Completed;
+                _repo.UpdateTask(task);
+                _repo.SaveChanges();
             }
-
-            return RedirectToAction("Index"); // reload page to remove completed task
+            return RedirectToAction("Index");
         }
 
+        // GET: Edit Task Form
+        [HttpGet]
         public IActionResult Edit(int id)
         {
-            var recordToEdit = _repo.Tasks.FirstOrDefault(x => x.TaskId == id);
+            var recordToEdit = _repo.GetTaskById(id);
+            if (recordToEdit == null)
+            {
+                return NotFound();
+            }
 
             ViewBag.Categories = _repo.Categories;
-
             return View("Tasks", recordToEdit);
         }
 
+        // POST: Update Task in Database
         [HttpPost]
         public IActionResult Edit(Task updatedInfo)
         {
-            _repo.UpdateTask(updatedInfo); // Uses repository to update task
+            if (ModelState.IsValid)
+            {
+                var existingTask = _repo.GetTaskById(updatedInfo.TaskId);
+                if (existingTask != null)
+                {
+                    // Update the existing task instead of creating a duplicate
+                    existingTask.TaskName = updatedInfo.TaskName;
+                    existingTask.DueDate = updatedInfo.DueDate;
+                    existingTask.Quadrant = updatedInfo.Quadrant;
+                    existingTask.CategoryId = updatedInfo.CategoryId;
+                    existingTask.Completed = updatedInfo.Completed;
+
+                    _repo.UpdateTask(existingTask);
+                    _repo.SaveChanges();
+                }
+            }
 
             return RedirectToAction("Index");
         }
 
+        // GET: Confirm Task Deletion
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var recordToDelete = _repo.Tasks.FirstOrDefault(x => x.TaskId == id);
-
+            var recordToDelete = _repo.GetTaskById(id);
             if (recordToDelete == null)
             {
                 return NotFound();
             }
-
             return View(recordToDelete);
         }
 
+        // POST: Delete Task from Database (Renamed to ConfirmDelete ✅)
         [HttpPost]
-        public IActionResult Delete(Task task)
+        public IActionResult ConfirmDelete(int id) // ✅ Renamed method to avoid conflict
         {
-            var recordToDelete = _repo.Tasks.FirstOrDefault(x => x.TaskId == task.TaskId);
-            
+            var recordToDelete = _repo.GetTaskById(id);
             if (recordToDelete != null)
             {
-                _repo.DeleteTask(recordToDelete); // Uses repository to delete task
-
+                _repo.DeleteTask(recordToDelete);
+                _repo.SaveChanges();
+                return RedirectToAction("Index");
             }
-            else
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction("Index");
+            return NotFound();
         }
     }
-
 }

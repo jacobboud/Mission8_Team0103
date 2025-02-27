@@ -7,18 +7,20 @@ namespace Mission8_Team0103.Models
     {
         [Key]
         public int TaskId { get; set; }
+        
 
         [Required]
-        public string TaskName { get; set; }
+        public required string TaskName { get; set; } // Add required
 
         public DateTime? DueDate { get; set; }
 
         [Required]
-        public string Quadrant { get; set; } // Quadrant I, II, III, IV
+        public int Quadrant { get; set; }
 
-        public int CategoryId { get; set; } // Foreign Key
-        public Category Category { get; set; } // Navigation Property
+        public int CategoryId { get; set; }
+        public Category? Category { get; set; } // ✅ Allow it to be null
 
-        public bool Completed { get; set; } = false; // Default to false
+        public bool Completed { get; set; } = false;
     }
+
 }
