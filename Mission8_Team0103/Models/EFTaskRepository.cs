@@ -1,5 +1,4 @@
-﻿// EFTaskRepository.cs (Mission8_Team1013/Infrastructure/EFTaskRepository.cs)
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Mission8_Team0103.Models;
 
@@ -17,7 +16,10 @@ namespace Mission8_Team0103.Models
         public IEnumerable<Task> Tasks => _context.Tasks.ToList();
         public IEnumerable<Category> Categories => _context.Categories.ToList();
 
-        public Task GetTaskById(int taskId) => _context.Tasks.Find(taskId);
+        // ✅ FIXED: Ensures method handles possible null values properly
+        public Task? GetTaskById(int taskId) => _context.Tasks.FirstOrDefault(t => t.TaskId == taskId);
+
+        public Category? GetCategoryById(int categoryId) => _context.Categories.FirstOrDefault(c => c.CategoryId == categoryId);
 
         public void AddTask(Task task)
         {
@@ -36,8 +38,6 @@ namespace Mission8_Team0103.Models
             _context.Tasks.Remove(task);
             _context.SaveChanges();
         }
-
-        public Category GetCategoryById(int categoryId) => _context.Categories.Find(categoryId);
 
         public void AddCategory(Category category)
         {
