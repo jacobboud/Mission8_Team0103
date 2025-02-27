@@ -15,7 +15,7 @@ namespace Mission8_Team0103.Controllers
             _repo = temp;
         }
 
-        public IActionResult Quadrants()
+        public IActionResult Index()
         {
             var tasks = _repo.Tasks; // Uses repository to get tasks
 
@@ -45,6 +45,20 @@ namespace Mission8_Team0103.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult UpdateCompletion(int TaskId, bool Completed)
+        {
+            var task = _repo.Tasks.FirstOrDefault(t => t.TaskId == TaskId);
+
+            if (task != null)
+            {
+                task.Completed = Completed; //update completion status
+                _repo.UpdateTask(task); // save changes in the databse
+            }
+
+            return RedirectToAction("Index"); // reload page to remove completed task
+        }
+
         public IActionResult Edit(int id)
         {
             var recordToEdit = _repo.Tasks.FirstOrDefault(x => x.TaskId == id);
@@ -59,7 +73,7 @@ namespace Mission8_Team0103.Controllers
         {
             _repo.UpdateTask(updatedInfo); // Uses repository to update task
 
-            return RedirectToAction("Quadrants");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -67,15 +81,30 @@ namespace Mission8_Team0103.Controllers
         {
             var recordToDelete = _repo.Tasks.FirstOrDefault(x => x.TaskId == id);
 
+            if (recordToDelete == null)
+            {
+                return NotFound();
+            }
+
             return View(recordToDelete);
         }
 
         [HttpPost]
-        public IActionResult Delete(Task deletedInfo)
+        public IActionResult Delete(Task task)
         {
-            _repo.DeleteTask(deletedInfo); // Uses repository to delete task
+            var recordToDelete = _repo.Tasks.FirstOrDefault(x => x.TaskId == task.TaskId);
+            
+            if (recordToDelete != null)
+            {
+                _repo.DeleteTask(recordToDelete); // Uses repository to delete task
 
-            return RedirectToAction("Quadrants");
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Index");
         }
     }
 
