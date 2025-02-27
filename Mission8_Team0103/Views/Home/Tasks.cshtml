@@ -2,7 +2,10 @@
 
 <div class="container mt-4">
     <h2>Add/Edit Task</h2>
-    <form asp-action="Tasks" method="post">
+    <form asp-action="@(Model.TaskId == 0 ? "Tasks" : "Edit")" method="post">
+
+        <input type="hidden" asp-for="TaskId" />
+
         <div class="mb-3">
             <label asp-for="TaskName" class="form-label"></label>
             <input asp-for="TaskName" class="form-control" required />

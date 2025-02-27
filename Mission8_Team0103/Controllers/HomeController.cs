@@ -128,9 +128,9 @@ namespace Mission8_Team0103.Controllers
 
         // POST: Delete Task from Database (Renamed to ConfirmDelete ✅)
         [HttpPost]
-        public IActionResult ConfirmDelete(int id) // ✅ Renamed method to avoid conflict
+        public IActionResult ConfirmDelete(int TaskId) // ✅ Renamed method to avoid conflict
         {
-            var recordToDelete = _repo.GetTaskById(id);
+            var recordToDelete = _repo.GetTaskById(TaskId);
             if (recordToDelete != null)
             {
                 _repo.DeleteTask(recordToDelete);
